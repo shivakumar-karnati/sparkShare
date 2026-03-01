@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import resources_post,blogPermissionPost
+from .models import resources_post
 
 class uploadform(forms.ModelForm):
     file = forms.FileField(required=True)
@@ -25,11 +25,6 @@ class uploadform(forms.ModelForm):
                 
             })
         }
-    
-class blogpost(forms.ModelForm):
-    class Meta:
-        model = blogPermissionPost
-        fields = ["title","content","author","published"]
 
 
 class RegisterForm(UserCreationForm):

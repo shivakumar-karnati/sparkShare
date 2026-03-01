@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect ,get_object_or_404
 from django.conf import settings
 # from sparks.sparks import settings
-from .models import resources_post,blogPermissionPost,profile
+from .models import resources_post,profile
 from .forms import uploadform , blogpost,RegisterForm
 from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm , AuthenticationForm , PasswordChangeForm
