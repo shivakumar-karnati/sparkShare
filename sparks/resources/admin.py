@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import resources_post,blogPermissionPost
+from .models import resources_post,profile
 # Register your models here.
 admin.site.register(resources_post)
-admin.site.register(blogPermissionPost)
+admin.site.register(profile)
