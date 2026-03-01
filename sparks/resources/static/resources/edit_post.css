@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* DARK BACKGROUND */
+.dark-bg {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1f1f1f, #2c3e50, #000000);
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* NAVBAR */
+.navbar {
+    background: linear-gradient(to left, #161515, #40474e, #1f1c1c);
+}
+
+.navbar-logo {
+    border-radius: 50%;
+    border: 2px solid rgb(178, 212, 242);
+}
+
+.navbar-brand-name {
+    font-size: 22px;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+}
+
+.nav-item {
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.nav-item:hover {
+    text-decoration: underline;
+}
+
+.profile-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#profile:hover .profile-img {
+    border: 3px solid #1882eb;
+}
+
+/* CENTER MAIN CONTENT */
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 15px;
+}
+
+/* FORM */
+.form-container {
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-card {
+    /* background: white; */
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    /* border-radius: 12px; */
+    box-shadow: 0 10px 15px rgba(255, 255, 255, 0.3);
+    color: white;
+    
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: 'Times New Roman', Times, serif;
+    /* color: #333; */
+}
+
+.form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* color: #333; */
+}
+
+/* INPUTS */
+input[type="text"],
+input[type="file"],
+textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+}
+
+.current-file {
+    background: #f4f5f6;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.current-file a {
+    color:black;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.no-file {
+    color: #888;
+}
+
+/* BUTTON */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4e73df;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #2e59d9;
+}

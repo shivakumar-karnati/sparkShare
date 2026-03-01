@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload | SparksShare</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'resources/upload.css' %}?v=2">
+</head>
+
+<body class="dark-bg">
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'homepage' %}">
+            <img src="{% static 'resources/sparkShare-logo.png' %}"
+                 class="navbar-logo"
+                 width="60"
+                 height="60"
+                 alt="Logo">
+            <span class="navbar-brand-name ms-2">SparksShare</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link " href="/home/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/resources/">Resources</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/upload/" style="text-decoration: underline; text-decoration-color: rgb(255, 255, 255);">Upload</a></li>
+            </ul>
+
+            {% if user.is_authenticated %}
+                <a class="nav-link ms-4" id="profile" href="/profile/">
+                    <img src="{{ user.profile.avatar.url }}"
+                         class="profile-img">
+                </a>
+            {% else %}
+                <a href="/register/" class="btn ms-2 btn-sm" id="login-btn">Register</a>
+                <a href="/login/" class="btn ms-2 btn-sm" id="register-btn">Login</a>
+                
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<!-- ================= UPLOAD SECTION ================= -->
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+  <div class="glass-card p-4 shadow-lg">
+
+      <h3 class="text-center fw-bold mb-4 text-info">Upload Resource</h3>
+
+      <!-- ===== Django Messages ===== -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="custom-alert 
+            {% if message.tags == 'error' %}
+              alert-danger-custom
+            {% elif message.tags == 'success' %}
+              alert-success-custom
+            {% elif message.tags == 'warning' %}
+              alert-warning-custom
+            {% endif %}
+            mb-3">
+              {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <!-- ===== Upload Form ===== -->
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Title -->
+        <div class="mb-3">
+          <label class="form-label text-light">Title</label>
+          {{ form.title }}
+          <div class="form-error">
+            {{ form.title.errors }}
+          </div>
+        </div>
+
+        <!-- Subject -->
+        <div class="mb-3">
+          <label class="form-label text-light">Subject</label>
+          {{ form.subject }}
+          <div class="form-error">
+            {{ form.subject.errors }}
+          </div>
+        </div>
+
+        <!-- File -->
+        <div class="mb-3">
+          <label class="form-label text-light">Upload File</label>
+          {{ form.file }}
+          <div class="form-error">
+            {{ form.file.errors }}
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 custom-btn">
+          Submit
+        </button>
+
+      </form>
+
+  </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer text-center py-3">
+  © 2025 SparksShare
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

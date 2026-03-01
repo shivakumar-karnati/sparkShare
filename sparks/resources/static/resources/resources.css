@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color:rgb(44, 46, 47);
+    color: white;
+}
+.navbar {
+    background: linear-gradient(to left, #161515, #40474e, #1f1c1c);
+}
+
+.navbar-logo {
+    border-radius: 50%;
+    border: 2px solid rgb(178, 212, 242);
+}
+
+.navbar-brand-name {
+    font-size: 22px;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+}
+
+.nav-item {
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.nav-item:hover {
+    text-decoration: underline;
+}
+
+.profile-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#profile:hover .profile-img {
+    border: 3px solid #1882eb;
+}
+/* Glass cards */
+.card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    color: white;
+}
+
+/* Card hover effect */
+.card:hover {
+    transform: translateY(-5px);
+    transition: 0.3s ease;
+}
+
+/* Search bar style */
+#search-box {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+#search-box:hover {
+  border: 1.5px solid rgb(255, 255, 255);
+}
+
+#search-box::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.input-group .btn {
+    background-color: #310dfd;
+    border: 1px solid white;
+}
+
+/* Footer */
+.footer {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+#login-btn , #register-btn {
+    font-size: 22px;
+    font-family: 'Times New Roman', Times, serif;
+    /* border-radius: 10px; */
+    border: none;
+    /* background-color: #1882eb; */
+    color: white;
+    /* padding: 3px; */
+    
+}
+#login-btn:hover ,
+#register-btn:hover {
+    text-decoration: underline;
+    text-decoration-color: white;
+}
+
