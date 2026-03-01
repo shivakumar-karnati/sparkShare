@@ -136,8 +136,6 @@ STATICFILES_DIRS = [
 ]
 
 
-import os
-
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('docl6eueu'),
     'API_KEY': os.environ.get('552163235623736'),
