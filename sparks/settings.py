@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'resources',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
@@ -134,9 +136,15 @@ STATICFILES_DIRS = [
 ]
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+import os
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('docl6eueu'),
+    'API_KEY': os.environ.get('552163235623736'),
+    'API_SECRET': os.environ.get('f-JQgdQtahIUEf9zXS-4DXz1TGo'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # Default primary key field type
