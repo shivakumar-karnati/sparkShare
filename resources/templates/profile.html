@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>profile | sparkShare | University Notes Hub</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'resources/profile.css' %}?v=4">
+</head>
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+  <div class="container">
+
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'homepage' %}">
+        <img src="{% static 'resources/sparkShare-logo.png' %}" 
+             class="navbar-logo"
+             width="70"
+             height="70"
+             alt="SparksShare Logo">
+        <span class="navbar-brand-name ms-2">SparksShare</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="/home/">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/resources/">Resources</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/upload/">Upload</a>
+        </li>
+
+        {% if not user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="/register/">Register</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/login/">Login</a>
+        </li>
+        {% endif %}
+
+      </ul>
+
+      {% if user.is_authenticated %}
+      <div class="nav-profile ms-4">
+          <a class="nav-link p-0" id="profile" href="/profile/">
+              <img src="{{ user.profile.avatar.url }}" 
+                   class="profile-img">
+          </a>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</nav>
+
+
+
+    <main class="main-content">
+        <div class="profile-card">
+            <h2>{{ request.user.username }}'s Profile</h2>
+            <br>
+            <img class="profile-pic" src="{{ request.user.profile.avatar.url }}" width="150px" height="150px" style="border-radius:50%; object-fit: cover;">
+            <br>
+            <br>
+            <p>Username : {{ request.user.username }}</p>
+            <p>Email: {{ request.user.email }}</p>
+            <br>
+            <div class="d-flex ms-5" style="gap: 100px;">
+            <button class="user-btn bg-primary"><a  id="user-login" href="/login/">login →</a></button><br>
+            <button class="user-btn bg-primary"><a  id="user-logout" href="/logout/">logout</a></button>
+            </div>
+        </div>
+        
+         
+        <div class="profile-activity" id="resourceContainer">
+
+            <h2 class="section-title">Your Posts :</h2>
+
+            <div class="posts-container">
+                {% for post in user_posts %}
+                <div class="post-card">
+                    <div class="card-body">
+
+                        <h5>{{ post.title }}</h5>
+
+                        <p class="text-info mb-2">
+                            {{ post.subject }} • {{ post.title }}
+                        </p>
+
+                        {% if post.file %}
+                            <div class="btn-group">
+                                <a href="{{ post.file.url }}" download
+                                class="btn btn-sm btn-outline-primary">Download</a>
+
+                                <a href="{{ post.file.url }}" target="_blank"
+                                class="btn btn-sm btn-outline-primary">View</a>
+                            </div>
+                        {% endif %}
+                        <div class="btn-group">
+                            <a href="{% url 'edit_post' post.id %}"
+                            class="btn btn-sm btn-outline-primary">
+                                edit
+                            </a>
+                            <a href="{% url 'delete_post' post.id %}"
+                            class="btn btn-sm btn-outline-primary">
+                                Delete
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+
+
+
+
+        
+
+            <!-- {% for post in user_posts %}
+                <div class="card mb-3 p-3">
+                    <h4>{{ post.title }}</h4>
+                    <p>{{ post.subject }}</p>
+                </div>
+            {% empty %}
+                <p>You have not created any posts yet.</p>
+            {% endfor %} -->
+    </main>
+    <footer class="text-center bg-light text-dark pb-3">
+    <small>© 2025 UniShare – Your University Notes Portal</small>
+  </footer>
+</body>
+</html>

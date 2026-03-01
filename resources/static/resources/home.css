@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color:rgb(44, 46, 47);
+    color: white;
+}
+.navbar {
+    background: linear-gradient(to left, #161515, #40474e, #1f1c1c);
+}
+
+.navbar-logo {
+    border-radius: 50%;
+    border: 2px solid rgb(178, 212, 242);
+}
+
+.navbar-brand-name {
+    font-size: 22px;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+}
+
+.nav-item {
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.nav-item:hover {
+    text-decoration: underline;
+}
+
+.profile-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#profile:hover .profile-img {
+    border: 3px solid #1882eb;
+}
+.main-content {
+    background: linear-gradient(135deg, #2f3035,rgb(54, 55, 56), #000000);
+    height: 100vh;
+    color: white;
+}
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: 0.3s ease;
+    color: white;
+}
+
+.glass-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+    font-size: 24px;
+    font-family: 'Times New Roman', Times, serif;
+}
+#login-btn {
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 10px;
+    border: 1px solid white;
+    background-color: #1882eb;
+    color: white;
+    padding: 3px;
+    
+}
+#login-btn:hover {
+    font-size: 20px;
+    /* padding: 1px; */
+}
+
+
