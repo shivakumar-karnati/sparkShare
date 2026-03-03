@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-uy$1_(g*rdsmj1l%1t_$6c10p=-c^6&^fk8!7c9bcakry!$o08'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['sparkshare.onrender.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -47,7 +47,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "sunsparks1306@gmail.com"
-EMAIL_HOST_PASSWORD = 'itcq uqva imrk luve'
+EMAIL_HOST_PASSWORD = 'nane lwur ikhj wtjl'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -137,13 +137,12 @@ STATICFILES_DIRS = [
 
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('docl6eueu'),
-    'API_KEY': os.environ.get('552163235623736'),
-    'API_SECRET': os.environ.get('f-JQgdQtahIUEf9zXS-4DXz1TGo'),
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
