@@ -46,7 +46,6 @@ def resources_view(request):
     return render(request, "resources_view.html", {"docs": docs})
 
 
-@login_required
 # @permission_required("resources.change_resources_post",raise_exception=True)
 @login_required
 def edit_post(request, id):
