@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import cloudinary
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-uy$1_(g*rdsmj1l%1t_$6c10p=-c^6&^fk8!7c9bcakry!$o08
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sparkshare.onrender.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -135,23 +135,15 @@ STATICFILES_DIRS = [
     BASE_DIR / 'sparks' / 'static'
 ]
 
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-import cloudinary
+MEDIA_URL = '/media/'
 
 cloudinary.config(
-    secure=True
+  cloud_name = "docl6eueu",
+  api_key = "827779879887663",
+  api_secret = "JLKnCeK8bMHTlWMSpVTXpv3mISk"
 )
 
-CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
-
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
 
 
 # Default primary key field type
