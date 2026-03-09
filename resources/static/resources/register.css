@@ -1,145 +1,252 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ===== MAIN SECTION ===== */
+
+.register-main{
+flex: 1;
+background: linear-gradient(270deg,#2f3035,#3a3b3f,#000000,#2f3035);
+
+background-size:600% 600%;
+
+animation:gradientMove 12s ease infinite;
+
+padding-top:40px;
+padding-bottom:80px;
+
+min-height:90vh;
+
 }
 
-body{
-    background-color:rgb(44, 46, 47);
-    color: white;
-}
-/* ========================= */
-/* NAVBAR MAIN STYLE */
-/* ========================= */
+/* ===== PAGE TITLE ===== */
 
-.custom-navbar {
-    background: linear-gradient(
-        to left,
-        rgb(22, 21, 21),
-        rgb(64, 71, 78),
-        rgb(31, 28, 28)
-    );
-    padding: 10px 0;
+.page-title{
+
+color:white;
+
+font-size:32px;
+
+margin-bottom:35px;
+
+animation:fadeDown .6s ease;
+
 }
 
-/* ========================= */
-/* LOGO */
-/* ========================= */
+/* ===== CARD ===== */
 
-.navbar-logo {
-    border-radius: 50%;
-    border: 2px solid rgb(178, 212, 242);
+.register-card{
+
+background:linear-gradient(145deg,#1e1e1e,#262626);
+
+border-radius:16px;
+
+padding:35px;
+
+border:1px solid rgba(255,255,255,0.1);
+
+box-shadow:0 8px 25px rgba(0,0,0,0.4);
+
+transition:.3s;
+
+animation:fadeUp .7s ease;
+
 }
 
-/* ========================= */
-/* BRAND NAME */
-/* ========================= */
+.register-card:hover{
 
-.navbar-brand-name {
-    font-size: 24px;
-    font-family: 'Times New Roman', Times, serif;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
+transform:translateY(-6px);
+
+box-shadow:0 12px 40px rgba(0,0,0,0.6);
+
+border-color:#0d6efd;
+
 }
 
-/* ========================= */
-/* NAV LINKS */
-/* ========================= */
+/* ===== LABEL ===== */
 
-.nav-item {
-    font-size: 22px;
-    font-family: 'Times New Roman', Times, serif;
-    margin: 0 8px;
+.form-label{
+
+color:#d3d3d3;
+
+font-weight:500;
+
+margin-bottom:6px;
+
 }
 
-.nav-link {
-    color: white !important;
-    transition: 0.3s ease;
+/* ===== INPUT ===== */
+
+input{
+
+width:100%;
+
+background:#2a2a2a !important;
+
+border:1px solid rgba(255,255,255,0.15) !important;
+
+color:white !important;
+
+padding:10px;
+
+border-radius:8px;
+
+transition:.3s;
+
 }
 
-/* Hover Effect */
-.nav-link:hover {
-    text-decoration: underline;
-    text-decoration-color: white;
+input:focus{
+
+border-color:#0d6efd !important;
+
+box-shadow:0 0 10px rgba(13,110,253,.6);
+
 }
 
-/* ========================= */
-/* PROFILE IMAGE */
-/* ========================= */
+/* ===== BUTTON ===== */
 
-.profile-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    transition: 0.3s ease;
+.register-btn{
+
+background:#0d6efd;
+
+border:none;
+
+font-weight:600;
+
+padding:12px;
+
+border-radius:8px;
+
+transition:.3s;
+
 }
 
-/* Hover Border */
-#profile:hover .profile-img {
-    border: 4px solid rgb(24, 130, 235);
+.register-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:0 8px 20px rgba(13,110,253,.5);
+
 }
 
-/* ========================= */
-/* MOBILE IMPROVEMENT */
-/* ========================= */
+/* ===== ERROR TEXT ===== */
 
-.navbar-toggler {
-    border: none;
-}
+.form-error{
 
-.navbar-toggler:focus {
-    box-shadow: none;
-}
-.main-content {
-    background: linear-gradient(135deg, #2f3035,rgb(54, 55, 56), #000000);
-    height: 100vh;
-    color: white;
+color:#ff6b6b;
+
+font-size:14px;
+
+margin-top:4px;
+
 }
 
-/* Glass Card */
-.glass-card {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 15px;
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    width: 100%;
-    max-width: 450px;
+/* ===== ALERT ===== */
+
+.custom-alert{
+
+padding:12px;
+
+border-radius:10px;
+
+margin-bottom:15px;
+
+background:rgba(220,53,69,.2);
+
+border:1px solid #dc3545;
+
+animation:fadeIn .4s ease;
+
 }
 
-/* Inputs */
-input {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border: none !important;
-    color: rgb(255, 255, 255) !important;
+/* ===== LOGIN LINK ===== */
+
+.login-link{
+
+color:#ccc;
+
 }
 
-input::placeholder {
-    color:rgba(255, 255, 255,0.6) !important;
+.login-link a{
+
+color:#0d6efd;
+
+text-decoration:none;
+
 }
 
-/* Button */
-.custom-btn {
-    border-radius: 8px;
-    font-weight: 500;
-    transition: 0.3s ease;
+.login-link a:hover{
+
+text-decoration:underline;
+
 }
 
-.custom-btn:hover {
-    transform: translateY(-3px);
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(25px);
 }
 
-/* Footer */
-.footer {
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-}
-.custom-alert {
-    transition: opacity 0.5s ease, transform 0.5s ease;
+to{
+opacity:1;
+transform:translateY(0);
 }
 
-.fade-out {
-    opacity: 0;
-    transform: translateY(-10px);
+}
+
+@keyframes fadeDown{
+
+from{
+opacity:0;
+transform:translateY(-20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+@keyframes fadeIn{
+
+from{opacity:0;}
+to{opacity:1;}
+
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-width:420px){
+
+.page-title{
+
+font-size:26px;
+
+}
+
+.register-card{
+
+padding:25px;
+
+}
+.container {
+    width: 380px;
+}
+
+}
+
+@media(max-width:480px){
+
+.register-main{
+
+padding-top:40px;
+
+}
+
+.register-card{
+
+padding:20px;
+
+}
+
 }
