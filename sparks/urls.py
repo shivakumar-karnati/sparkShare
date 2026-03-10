@@ -26,6 +26,7 @@ urlpatterns = [
     path('', views.basepage,name="basepage"),
     path('home/', views.homepage,name="homepage"),
     path('resources/', views.resources_view,name="resource_view"),
+    path("download/<int:pk>/", views.download_pdf, name="download_pdf"),
     path('edit_post/<int:id>/', views.edit_post,name="edit_post"),
     path('delete_post/<int:id>/', views.delete_post,name="delete_post"),
     path('upload/',views.resource_upload,name="upload"),

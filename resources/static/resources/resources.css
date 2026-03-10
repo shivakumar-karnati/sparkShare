@@ -16,6 +16,10 @@ padding-bottom:60px;
 
 }
 
+#loginMessage{
+transition: opacity 0.3s ease;
+}
+
 
 /* BACKGROUND ANIMATION */
 

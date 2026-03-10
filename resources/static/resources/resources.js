@@ -42,3 +42,33 @@ filterResources();
 });
 
 });
+document.addEventListener("DOMContentLoaded", function(){
+
+let buttons = document.querySelectorAll(".login-required");
+let msg = document.getElementById("loginMessage");
+
+buttons.forEach(function(btn){
+
+btn.addEventListener("click", function(e){
+
+e.preventDefault();
+
+/* show message */
+msg.style.display = "block";
+msg.style.opacity = "1";
+
+/* hide after 3 seconds */
+setTimeout(function(){
+msg.style.opacity = "0";
+
+setTimeout(function(){
+msg.style.display = "none";
+},300);
+
+},3000);
+
+});
+
+});
+
+});

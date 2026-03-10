@@ -28,7 +28,7 @@ def homepage(request):
 
 
 def resources_view(request):
-    docs = resources_post.objects.all()
+    docs = resources_post.objects.all().order_by('-id')
 
     action = request.GET.get("action")
     file_id = request.GET.get("id")
@@ -44,6 +44,19 @@ def resources_view(request):
         return redirect(doc.file.url)
 
     return render(request, "resources_view.html", {"docs": docs})
+
+
+from django.http import FileResponse
+from django.shortcuts import get_object_or_404
+
+import os
+
+@login_required
+def download_pdf(request, pk):
+    doc = get_object_or_404(resources_post, id=pk)
+
+    file_path = doc.file.path
+    return FileResponse(open(file_path, 'rb'), as_attachment=True)
 
 
 # @permission_required("resources.change_resources_post",raise_exception=True)

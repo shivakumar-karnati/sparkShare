@@ -17,6 +17,11 @@ Resources | SparksShare
 
 <div class="container py-4" id="resources-section">
 
+
+<div id="loginMessage" class="alert alert-warning text-center" style="display:none;">
+⚠ Please login to access this resource
+</div>
+
 <h2 class="text-center fw-bold mb-4 page-title">
 Available Resources
 </h2>
@@ -33,7 +38,6 @@ Available Resources
 
 {% endfor %}
 {% endif %}
-
 
 <!-- SEARCH BAR -->
 <form method="get" id="searchForm" class="input-group mb-4 search-box">
@@ -71,12 +75,11 @@ Search
 <p class="text-info mb-2 resource-subject">
 {{ doc.subject }}
 </p>
-
 {% if doc.file %}
 
 {% if user.is_authenticated %}
 
-<a href="{{ doc.file.url }}?dl=1" download class="btn btn-sm btn-success">
+<a href="{{ doc.file.url }}?fl_attachment=true" class="btn btn-sm btn-success">
 ⬇ Download
 </a>
 
@@ -86,11 +89,11 @@ Search
 
 {% else %}
 
-<a href="{{ doc.file.url }}" class="btn btn-sm btn-success">
+<a href="#" class="btn btn-sm btn-success login-required">
 ⬇ Download
 </a>
 
-<a href="{{ doc.file.url }}" class="btn btn-sm btn-primary">
+<a href="#" class="btn btn-sm btn-primary login-required">
 👁 View
 </a>
 

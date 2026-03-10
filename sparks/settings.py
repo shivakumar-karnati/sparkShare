@@ -132,7 +132,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFileStorage'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'sparks' / 'static'
+    BASE_DIR / 'resources' / 'static'
 ]
 
 MEDIA_URL = '/media/'
