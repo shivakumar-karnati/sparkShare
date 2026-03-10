@@ -76,7 +76,7 @@ Search
 
 {% if user.is_authenticated %}
 
-<a href="{{ doc.file.url }}?dl=1" class="btn btn-sm btn-success">
+<a href="{{ doc.file.url }}?dl=1" download class="btn btn-sm btn-success">
 ⬇ Download
 </a>
 
@@ -86,11 +86,11 @@ Search
 
 {% else %}
 
-<a href="{{ doc.file.url }}" download class="btn btn-sm btn-success">
+<a href="{{ doc.file.url }}" class="btn btn-sm btn-success">
 ⬇ Download
 </a>
 
-<a href="{{ doc.file.url }}" target="_blank" class="btn btn-sm btn-primary">
+<a href="{{ doc.file.url }}" class="btn btn-sm btn-primary">
 👁 View
 </a>
 
