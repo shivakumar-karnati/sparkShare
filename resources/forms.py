@@ -30,8 +30,9 @@ class uploadform(forms.ModelForm):
 class RegisterForm(UserCreationForm):
 
     email = forms.EmailField(
+        required=True,
         widget=forms.EmailInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control required',
             'placeholder': 'Enter email'
         })
     )

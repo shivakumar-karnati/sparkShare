@@ -124,19 +124,20 @@ from django.urls import reverse
 from django.core.mail import send_mail
 from django.conf import settings
 
+from django.contrib import messages
+
 def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
+
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
             user.save()
 
-            # 🔹 Generate UID + Token
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)
 
-            # 🔹 Create activation link
             activation_link = request.build_absolute_uri(
                 reverse('activate', kwargs={
                     'uidb64': uid,
@@ -144,22 +145,27 @@ def register(request):
                 })
             )
 
-            # 🔹 Send Email with link
-            send_mail(
-                "Activate Your Account",
-                f"Click the link below to activate your account:\n\n{activation_link}",
-                settings.EMAIL_HOST_USER,
-                [user.email],
-            )
+            try:
+                send_mail(
+                    "Activate Your Account",
+                    f"Click the link below to activate your account:\n\n{activation_link}",
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                    fail_silently=False,
+                )
 
-            messages.success(request, "Activation link sent to your email 📧")
+                messages.success(request, "Activation link sent to your email 📧")
+
+            except Exception as e:
+                print("EMAIL ERROR:", e)
+                messages.error(request, "Email could not be sent. Contact admin.")
+
             return redirect("user_login")
 
     else:
         form = RegisterForm()
 
     return render(request, "register.html", {"form": form})
-
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.models import User
 
