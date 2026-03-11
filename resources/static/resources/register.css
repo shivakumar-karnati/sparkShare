@@ -98,6 +98,19 @@ border-color:#0d6efd !important;
 box-shadow:0 0 10px rgba(13,110,253,.6);
 
 }
+.toggle-icon{
+    
+position:absolute;
+
+right:15px;
+
+top:38px;
+
+cursor:pointer;
+
+color:#aaa;
+
+}
 
 /* ===== BUTTON ===== */
 

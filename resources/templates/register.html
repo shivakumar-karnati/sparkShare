@@ -68,35 +68,34 @@ Create Account
 </div>
 
 <!-- Password -->
-
-<div class="mb-4">
+<div class="mb-4 position-relative">
 
 <label class="form-label">Password</label>
 
-{{ form.password1 }}
+<input type="password"
+name="password"
+id="password"
+class="form-control pe-5"
+required>
 
-{% if form.password1.errors %}
-<div class="form-error">
-{{ form.password1.errors }}
+<i class="bi bi-eye-slash toggle-icon"
+id="toggleIcon"
+onclick="togglePassword()"></i>
 </div>
-{% endif %}
 
-</div>
-
-<!-- Confirm Password -->
-
-<div class="mb-4">
+<div class="mb-4 position-relative">
 
 <label class="form-label">Confirm Password</label>
 
-{{ form.password2 }}
+<input type="password"
+name="conformpassword"
+id="conform-password"
+class="form-control pe-5"
+required>
 
-{% if form.password2.errors %}
-<div class="form-error">
-{{ form.password2.errors }}
-</div>
-{% endif %}
-
+<i class="bi bi-eye-slash toggle-icon"
+id="toggleIcon"
+onclick="togglePassword()"></i>
 </div>
 
 <button type="submit" class="btn register-btn w-100">
