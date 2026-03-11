@@ -145,22 +145,20 @@ def register(request):
 
         if form.is_valid():
 
-            otp = random.randint(100000, 999999)
-            print("otp:" , otp)
-            request.session["otp"] = otp
-            request.session["user_data"] = form.cleaned_data
+            otp = random.randint(100000,999999)
 
-            # OTP expires in 10 minutes
-            request.session.set_expiry(600)
+            request.session['register_data'] = form.cleaned_data
+            request.session['otp'] = otp
+            request.session['otp_time'] = time.time()
 
-            email = form.cleaned_data.get("email")
+            email = form.cleaned_data['email']
 
             send_mail(
-                "Your SparksShare OTP",
-                f"Your OTP is for registration: {otp}",
+                "Your OTP Code",
+                f"Your verification OTP is: {otp}",
                 settings.EMAIL_HOST_USER,
                 [email],
-                fail_silently=False,
+                fail_silently=False
             )
 
             return redirect("verify_otp")
@@ -168,60 +166,72 @@ def register(request):
     else:
         form = RegisterForm()
 
-    return render(request, "register.html", {"form": form})
-
+    return render(request,"register.html",{"form":form})
 from django.contrib.auth.models import User
-
+import time
 def verify_otp(request):
+
+    if "register_data" not in request.session:
+        return redirect("register")
 
     if request.method == "POST":
 
-        entered_otp = request.POST.get("otp")
-        session_otp = request.session.get("otp")
+        user_otp = request.POST.get("otp")
+        real_otp = request.session.get("otp")
+        otp_time = request.session.get("otp_time")
 
-        if str(entered_otp) == str(session_otp):
+        # 10 minute expiry
+        if time.time() - otp_time > 600:
+            messages.error(request,"OTP expired")
+            return redirect("register")
 
-            data = request.session.get("user_data")
+        if str(real_otp) == str(user_otp):
 
-            user = User.objects.create_user(
+            data = request.session.get("register_data")
+
+            from django.contrib.auth.models import User
+
+            User.objects.create_user(
                 username=data["username"],
                 email=data["email"],
                 password=data["password1"]
             )
 
-            request.session.flush()
+            del request.session["register_data"]
+            del request.session["otp"]
+            del request.session["otp_time"]
 
-            messages.success(request, "Account created successfully")
+            messages.success(request,"Account created successfully")
             return redirect("user_login")
 
         else:
-            messages.error(request, "Invalid OTP")
+            messages.error(request,"Invalid OTP")
 
-    return render(request, "verify_otp.html")
+    return render(request,"verify_otp.html")
 
 import random
 
 def resend_otp(request):
 
-    user_data = request.session.get("user_data")
-
-    if not user_data:
+    if "register_data" not in request.session:
         return redirect("register")
 
-    otp = random.randint(100000, 999999)
+    otp = random.randint(100000,999999)
 
     request.session["otp"] = otp
-    request.session.set_expiry(600)
+    request.session["otp_time"] = time.time()
+
+    email = request.session["register_data"]["email"]
 
     send_mail(
-        "Your SparksShare OTP",
-        f"Your new OTP is: {otp}",
+        "New OTP Code",
+        f"Your new OTP is {otp}",
         settings.EMAIL_HOST_USER,
-        [user_data["email"]],
-        fail_silently=False,
+        [email],
+        fail_silently=False
     )
 
-    messages.success(request, "New OTP sent")
+    messages.success(request,"OTP resent")
 
     return redirect("verify_otp")
 

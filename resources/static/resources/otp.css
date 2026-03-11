@@ -1,0 +1,150 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: "Segoe UI", sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+}
+
+/* OTP container */
+
+.otp-container{
+
+background:white;
+padding:40px;
+border-radius:12px;
+width:380px;
+text-align:center;
+
+box-shadow:0 15px 35px rgba(0,0,0,0.3);
+
+animation:fadeIn 0.7s ease;
+
+}
+
+/* Animation */
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+/* Title */
+
+.otp-container h2{
+margin-bottom:20px;
+color:#333;
+}
+
+/* OTP input */
+
+.otp-container input{
+
+width:100%;
+padding:12px;
+font-size:18px;
+
+border-radius:8px;
+border:2px solid #ddd;
+
+text-align:center;
+letter-spacing:5px;
+
+transition:0.3s;
+
+}
+
+.otp-container input:focus{
+
+outline:none;
+border-color:#2c5364;
+box-shadow:0 0 8px rgba(44,83,100,0.4);
+
+}
+
+/* Button */
+
+.otp-container button{
+
+margin-top:20px;
+width:100%;
+padding:12px;
+
+border:none;
+border-radius:8px;
+
+background:#2c5364;
+color:white;
+
+font-size:16px;
+cursor:pointer;
+
+transition:0.3s;
+
+}
+
+.otp-container button:hover{
+
+background:#1c3b4a;
+transform:scale(1.03);
+
+}
+
+/* Timer text */
+
+#timer{
+
+margin-top:15px;
+font-size:14px;
+color:#777;
+
+}
+
+/* Resend link */
+
+#resend{
+
+display:inline-block;
+margin-top:15px;
+
+color:#2c5364;
+font-weight:bold;
+
+text-decoration:none;
+
+}
+
+#resend:hover{
+
+text-decoration:underline;
+
+}
+
+/* Responsive */
+
+@media (max-width:450px){
+
+.otp-container{
+
+width:90%;
+padding:30px;
+
+}
+
+}
