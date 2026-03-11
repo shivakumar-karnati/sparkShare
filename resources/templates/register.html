@@ -68,34 +68,14 @@ Create Account
 </div>
 
 <!-- Password -->
-<div class="mb-4 position-relative">
-
-<label class="form-label">Password</label>
-
-<input type="password"
-name="password"
-id="password"
-class="form-control pe-5"
-required>
-
-<i class="bi bi-eye-slash toggle-icon"
-id="toggleIcon"
-onclick="togglePassword()"></i>
+<div class="password-wrapper">
+{{ form.password1 }}
+<span class="toggle-password" onclick="togglePassword('id_password1')">👁</span>
 </div>
 
-<div class="mb-4 position-relative">
-
-<label class="form-label">Confirm Password</label>
-
-<input type="password"
-name="conformpassword"
-id="conform-password"
-class="form-control pe-5"
-required>
-
-<i class="bi bi-eye-slash toggle-icon"
-id="toggleIcon"
-onclick="togglePassword()"></i>
+<div class="password-wrapper">
+{{ form.password2 }}
+<span class="toggle-password" onclick="togglePassword('id_password2')">👁</span>
 </div>
 
 <button type="submit" class="btn register-btn w-100">
