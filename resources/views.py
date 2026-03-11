@@ -126,63 +126,104 @@ from django.conf import settings
 
 from django.contrib import messages
 
+import random
+from django.core.mail import send_mail
+from django.conf import settings
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+import random
+from django.core.mail import send_mail
+from django.conf import settings
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
 def register(request):
+
     if request.method == "POST":
         form = RegisterForm(request.POST)
 
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
 
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            token = default_token_generator.make_token(user)
+            otp = random.randint(100000, 999999)
+            print("otp:" , otp)
+            request.session["otp"] = otp
+            request.session["user_data"] = form.cleaned_data
 
-            activation_link = request.build_absolute_uri(
-                reverse('activate', kwargs={
-                    'uidb64': uid,
-                    'token': token
-                })
+            # OTP expires in 10 minutes
+            request.session.set_expiry(600)
+
+            email = form.cleaned_data.get("email")
+
+            send_mail(
+                "Your SparksShare OTP",
+                f"Your OTP is for registration: {otp}",
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,
             )
 
-            try:
-                send_mail(
-                    "Activate Your Account",
-                    f"Click the link below to activate your account:\n\n{activation_link}",
-                    settings.EMAIL_HOST_USER,
-                    [user.email],
-                    fail_silently=False,
-                )
-
-                messages.success(request, "Activation link sent to your email 📧")
-
-            except Exception as e:
-                print("EMAIL ERROR:", e)
-                messages.error(request, "Email could not be sent. Contact admin.")
-
-            return redirect("user_login")
+            return redirect("verify_otp")
 
     else:
         form = RegisterForm()
 
     return render(request, "register.html", {"form": form})
-from django.utils.http import urlsafe_base64_decode
+
 from django.contrib.auth.models import User
 
-def activate(request, uidb64, token):
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
-    except:
-        user = None
+def verify_otp(request):
 
-    if user and default_token_generator.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return redirect("user_login")
-    else:
+    if request.method == "POST":
+
+        entered_otp = request.POST.get("otp")
+        session_otp = request.session.get("otp")
+
+        if str(entered_otp) == str(session_otp):
+
+            data = request.session.get("user_data")
+
+            user = User.objects.create_user(
+                username=data["username"],
+                email=data["email"],
+                password=data["password1"]
+            )
+
+            request.session.flush()
+
+            messages.success(request, "Account created successfully")
+            return redirect("user_login")
+
+        else:
+            messages.error(request, "Invalid OTP")
+
+    return render(request, "verify_otp.html")
+
+import random
+
+def resend_otp(request):
+
+    user_data = request.session.get("user_data")
+
+    if not user_data:
         return redirect("register")
 
+    otp = random.randint(100000, 999999)
+
+    request.session["otp"] = otp
+    request.session.set_expiry(600)
+
+    send_mail(
+        "Your SparksShare OTP",
+        f"Your new OTP is: {otp}",
+        settings.EMAIL_HOST_USER,
+        [user_data["email"]],
+        fail_silently=False,
+    )
+
+    messages.success(request, "New OTP sent")
+
+    return redirect("verify_otp")
 
 def user_login(request):
     if request.method == 'POST':

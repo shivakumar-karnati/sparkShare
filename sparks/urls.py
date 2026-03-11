@@ -31,6 +31,8 @@ urlpatterns = [
     path('delete_post/<int:id>/', views.delete_post,name="delete_post"),
     path('upload/',views.resource_upload,name="upload"),
     path('register/',views.register,name="register"),
+    path("verify-otp/", views.verify_otp, name="verify_otp"),
+    path("resend-otp/", views.resend_otp, name="resend_otp"),
     path('profile/', views.profile_view, name='profile'),
     path('login/',views.user_login,name="user_login"),
     path('logout/',views.user_logout,name="user_logout"),
@@ -41,7 +43,7 @@ urlpatterns = [
     path('reset/done/',auth_views.PasswordResetCompleteView.as_view(),name="password_reset_complete"),
 
 
-   path('activate/<uidb64>/<token>/', views.activate, name='activate'), 
+#    path('activate/<uidb64>/<token>/', views.activate, name='activate'), 
 
 
 ]
