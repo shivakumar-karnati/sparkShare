@@ -29,12 +29,12 @@ Create Account
 
 {% csrf_token %}
 
-{% if messages %}
-{% for message in messages %}
+{% if form.errors %}
+{% for error in form.errors %}
 
 <div class="custom-alert alert-danger">
 
-{{ message }}
+{{ error }}
 
 </div>
 
