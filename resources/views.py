@@ -125,45 +125,42 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 from django.contrib import messages
-
 import random
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+
 def register(request):
-
     if request.method == "POST":
-        form = RegisterForm(request.POST)
+        email = request.POST.get("email")
 
-        if form.is_valid():
+        # generate otp
+        otp = random.randint(100000, 999999)
 
-            otp = random.randint(100000,999999)
+        # store otp in session
+        request.session["otp"] = otp
+        request.session["email"] = email
 
-            request.session['register_data'] = form.cleaned_data
-            request.session['otp'] = otp
-            request.session['otp_time'] = time.time()
+        # email message
+        message = f"Your SparkShare OTP is {otp}. It is valid for 10 minutes."
 
-            email = form.cleaned_data['email']
+        try:
+            send_mail(
+                "SparkShare OTP Verification",
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+                fail_silently=False
+            )
+        except Exception as e:
+            print("Email Error:", e)
+            messages.error(request, "Email sending failed")
 
-            try:
-                send_mail(
-                    "OTP Verification",
-                    message,
-                    settings.DEFAULT_FROM_EMAIL,
-                    [email],
-                    fail_silently=False
-                )
-            except Exception as e:
-                print("Email Error:", e)
+        return redirect("otp_verify")
 
-            return redirect("verify_otp")
-
-    else:
-        form = RegisterForm()
-
-    return render(request,"register.html",{"form":form})
+    return render(request, "register.html")
 from django.contrib.auth.models import User
 import time
 def verify_otp(request):

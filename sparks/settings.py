@@ -25,8 +25,15 @@ SECRET_KEY = 'django-insecure-uy$1_(g*rdsmj1l%1t_$6c10p=-c^6&^fk8!7c9bcakry!$o08
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['sparkshare.onrender.com']
+ALLOWED_HOSTS = [
+    "sparkshare.onrender.com",
+    "127.0.0.1",
+    "localhost"
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://sparkshare.onrender.com",
+]
 
 # Application definition
 
