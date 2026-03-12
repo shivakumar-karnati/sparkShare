@@ -179,7 +179,7 @@ def register(request):
 
             messages.success(request, "OTP sent to your email")
 
-            return redirect("otp_verify")
+            return redirect("verify_otp")
 
     else:
         form = RegisterForm()
@@ -246,7 +246,7 @@ def resend_otp(request):
 
     messages.success(request, "New OTP sent")
 
-    return redirect("otp_verify")
+    return redirect("verify_otp")
 def user_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request , data = request.POST)
