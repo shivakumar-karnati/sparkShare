@@ -8,3 +8,4 @@ django-cors-headers==4.9.0
 djangorestframework==3.16.1
 cloudinary==1.40.0
 django-cloudinary-storage==0.3.0
+sendgrid==6.11.0

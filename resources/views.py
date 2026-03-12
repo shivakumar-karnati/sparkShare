@@ -116,46 +116,68 @@ def resource_upload(request):
 
     return render(request, "upload.html", {"form": form})
 
-from .forms import RegisterForm
 import random
 import time
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.models import User
+
+from .forms import RegisterForm
+
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
+# SEND OTP EMAIL FUNCTION
+def send_otp_email(email, otp):
+
+    message = Mail(
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to_emails=email,
+        subject="SparkShare OTP Verification",
+        html_content=f"""
+        <h2>Your OTP is {otp}</h2>
+        <p>This OTP is valid for <b>10 minutes</b>.</p>
+        """
+    )
+
+    try:
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        sg.send(message)
+    except Exception as e:
+        print("SendGrid Error:", e)
+
+
+# REGISTER VIEW
 def register(request):
 
     if request.method == "POST":
+
         form = RegisterForm(request.POST)
 
         if form.is_valid():
 
-            # store user data in session
-            request.session["register_data"] = form.cleaned_data
+            data = form.cleaned_data
 
-            email = form.cleaned_data["email"]
+            # save data temporarily
+            request.session["register_data"] = {
+                "username": data["username"],
+                "email": data["email"],
+                "password1": data["password1"],
+            }
+
+            email = data["email"]
 
             otp = random.randint(100000, 999999)
 
             request.session["otp"] = otp
             request.session["otp_time"] = time.time()
 
-            message = f"Your SparkShare OTP is {otp}. It is valid for 10 minutes."
+            send_otp_email(email, otp)
 
-            try:
-                send_mail(
-                    "SparkShare OTP Verification",
-                    message,
-                    settings.DEFAULT_FROM_EMAIL,
-                    [email],
-                    fail_silently=False
-                )
-            except Exception as e:
-                print("Email Error:", e)
-                messages.error(request, "Email sending failed")
-                return redirect("register")
+            messages.success(request, "OTP sent to your email")
 
             return redirect("otp_verify")
 
@@ -164,8 +186,8 @@ def register(request):
 
     return render(request, "register.html", {"form": form})
 
-from django.contrib.auth.models import User
-import time
+
+# VERIFY OTP
 def verify_otp(request):
 
     if "register_data" not in request.session:
@@ -174,19 +196,18 @@ def verify_otp(request):
     if request.method == "POST":
 
         user_otp = request.POST.get("otp")
+
         real_otp = request.session.get("otp")
+
         otp_time = request.session.get("otp_time")
 
-        # 10 minute expiry
         if time.time() - otp_time > 600:
-            messages.error(request,"OTP expired")
+            messages.error(request, "OTP expired")
             return redirect("register")
 
-        if str(real_otp) == str(user_otp):
+        if str(user_otp) == str(real_otp):
 
-            data = request.session.get("register_data")
-
-            from django.contrib.auth.models import User
+            data = request.session["register_data"]
 
             User.objects.create_user(
                 username=data["username"],
@@ -198,39 +219,34 @@ def verify_otp(request):
             del request.session["otp"]
             del request.session["otp_time"]
 
-            messages.success(request,"Account created successfully")
+            messages.success(request, "Account created successfully")
+
             return redirect("user_login")
 
         else:
-            messages.error(request,"Invalid OTP")
+            messages.error(request, "Invalid OTP")
 
-    return render(request,"verify_otp.html")
+    return render(request, "verify_otp.html")
 
-import random
 
+# RESEND OTP
 def resend_otp(request):
 
     if "register_data" not in request.session:
         return redirect("register")
 
-    otp = random.randint(100000,999999)
+    otp = random.randint(100000, 999999)
 
     request.session["otp"] = otp
     request.session["otp_time"] = time.time()
 
     email = request.session["register_data"]["email"]
 
-    send_mail(
-    "New OTP Code",
-    f"Your new OTP is {otp}",
-    settings.DEFAULT_FROM_EMAIL,
-    [email],
-    fail_silently=False
-)
-    messages.success(request,"OTP resent")
+    send_otp_email(email, otp)
 
-    return redirect("verify_otp")
+    messages.success(request, "New OTP sent")
 
+    return redirect("otp_verify")
 def user_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request , data = request.POST)

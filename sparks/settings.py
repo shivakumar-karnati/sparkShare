@@ -61,8 +61,9 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "apikey"
 
-EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_API_KEY")
+import os
 
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 DEFAULT_FROM_EMAIL = "sunsparks1306@gmail.com"
 
 EMAIL_TIMEOUT = 30
