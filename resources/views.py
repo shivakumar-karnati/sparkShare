@@ -128,27 +128,26 @@ from .forms import RegisterForm
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from django.conf import settings
 
 
-# SEND OTP EMAIL FUNCTION
 def send_otp_email(email, otp):
 
-    message = Mail(
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        to_emails=email,
-        subject="SparkShare OTP Verification",
-        html_content=f"""
-        <h2>Your OTP is {otp}</h2>
-        <p>This OTP is valid for <b>10 minutes</b>.</p>
-        """
-    )
-
     try:
-        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-        sg.send(message)
-    except Exception as e:
-        print("SendGrid Error:", e)
+        message = Mail(
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to_emails=email,
+            subject="SparkShare OTP",
+            html_content=f"<h2>Your OTP is {otp}</h2>"
+        )
 
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        response = sg.send(message)
+
+        print("SENDGRID STATUS:", response.status_code)
+
+    except Exception as e:
+        print("SENDGRID ERROR:", e)
 
 # REGISTER VIEW
 def register(request):
