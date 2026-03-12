@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 ]
 import os
 
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_HOST = "smtp.sendgrid.net"
@@ -56,6 +57,7 @@ EMAIL_HOST_USER = "apikey"
 EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_API_KEY")
 
 DEFAULT_FROM_EMAIL = "sunsparks1306@gmail.com"
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
