@@ -138,7 +138,21 @@ def send_otp_email(email, otp):
             from_email=settings.DEFAULT_FROM_EMAIL,
             to_emails=email,
             subject="SparkShare OTP",
-            html_content=f"<h2>Your OTP is {otp}</h2>"
+            html_content=f"""
+            <h2>SparkShare Verification</h2>
+
+            <p>Hello,</p>
+
+            <p>Your OTP code is:</p>
+
+            <h1>{otp}</h1>
+
+            <p>This OTP will expire in 10 minutes.</p>
+
+            <p>If you didn't request this, ignore this email.</p>
+
+            <p>Thanks,<br>SparkShare Team</p>
+            """
         )
 
         sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
