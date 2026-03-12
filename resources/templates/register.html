@@ -29,17 +29,13 @@ Create Account
 
 {% csrf_token %}
 
-{% if form.errors %}
-{% for error in form.errors %}
-
-<div class="custom-alert alert-danger">
-
-{{ error }}
-
-</div>
-
+{% for field in form %}
+    {% for error in field.errors %}
+        <div class="custom-alert alert-danger">
+            {{ error }}
+        </div>
+    {% endfor %}
 {% endfor %}
-{% endif %}
 
 <!-- Username -->
 

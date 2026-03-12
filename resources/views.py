@@ -116,51 +116,54 @@ def resource_upload(request):
 
     return render(request, "upload.html", {"form": form})
 
-
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.urls import reverse
-from django.core.mail import send_mail
-from django.conf import settings
-
-from django.contrib import messages
+from .forms import RegisterForm
 import random
-from django.core.mail import send_mail
-from django.conf import settings
+import time
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def register(request):
+
     if request.method == "POST":
-        email = request.POST.get("email")
+        form = RegisterForm(request.POST)
 
-        # generate otp
-        otp = random.randint(100000, 999999)
+        if form.is_valid():
 
-        # store otp in session
-        request.session["otp"] = otp
-        request.session["email"] = email
+            # store user data in session
+            request.session["register_data"] = form.cleaned_data
 
-        # email message
-        message = f"Your SparkShare OTP is {otp}. It is valid for 10 minutes."
+            email = form.cleaned_data["email"]
 
-        try:
-            send_mail(
-                "SparkShare OTP Verification",
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                [email],
-                fail_silently=False
-            )
-        except Exception as e:
-            print("Email Error:", e)
-            messages.error(request, "Email sending failed")
+            otp = random.randint(100000, 999999)
 
-        return redirect("otp_verify")
+            request.session["otp"] = otp
+            request.session["otp_time"] = time.time()
 
-    return render(request, "register.html")
+            message = f"Your SparkShare OTP is {otp}. It is valid for 10 minutes."
+
+            try:
+                send_mail(
+                    "SparkShare OTP Verification",
+                    message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email],
+                    fail_silently=False
+                )
+            except Exception as e:
+                print("Email Error:", e)
+                messages.error(request, "Email sending failed")
+                return redirect("register")
+
+            return redirect("otp_verify")
+
+    else:
+        form = RegisterForm()
+
+    return render(request, "register.html", {"form": form})
+
 from django.contrib.auth.models import User
 import time
 def verify_otp(request):
@@ -218,13 +221,12 @@ def resend_otp(request):
     email = request.session["register_data"]["email"]
 
     send_mail(
-        "New OTP Code",
-        f"Your new OTP is {otp}",
-        settings.EMAIL_HOST_USER,
-        [email],
-        fail_silently=False
-    )
-
+    "New OTP Code",
+    f"Your new OTP is {otp}",
+    settings.DEFAULT_FROM_EMAIL,
+    [email],
+    fail_silently=False
+)
     messages.success(request,"OTP resent")
 
     return redirect("verify_otp")
