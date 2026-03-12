@@ -64,7 +64,7 @@ EMAIL_HOST_USER = "apikey"
 import os
 
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
-DEFAULT_FROM_EMAIL = "noreply@sparkshare.com"
+DEFAULT_FROM_EMAIL = "sunsparks1306@gmail.com"
 
 EMAIL_TIMEOUT = 30
 CONN_MAX_AGE = 60
