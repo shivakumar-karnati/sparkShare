@@ -58,6 +58,9 @@ EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_API_KEY")
 
 DEFAULT_FROM_EMAIL = "sunsparks1306@gmail.com"
 
+EMAIL_TIMEOUT = 30
+CONN_MAX_AGE = 60
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

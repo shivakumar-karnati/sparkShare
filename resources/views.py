@@ -147,13 +147,16 @@ def register(request):
 
             email = form.cleaned_data['email']
 
-            send_mail(
-                "Your OTP Code",
-                f"Your verification OTP is: {otp}",
-                settings.EMAIL_HOST_USER,
-                [email],
-                fail_silently=False
-            )
+            try:
+                send_mail(
+                    "OTP Verification",
+                    message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email],
+                    fail_silently=False
+                )
+            except Exception as e:
+                print("Email Error:", e)
 
             return redirect("verify_otp")
 
