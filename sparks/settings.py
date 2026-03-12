@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-uy$1_(g*rdsmj1l%1t_$6c10p=-c^6&^fk8!7c9bcakry!$o08
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["sparkshare.onrender.com"]
+ALLOWED_HOSTS = ['sparkshare.onrender.com']
 
 
 # Application definition
@@ -41,14 +41,21 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
 ]
+import os
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
+
+EMAIL_HOST = "smtp.sendgrid.net"
+
 EMAIL_PORT = 587
+
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = "sunsparks1306@gmail.com"
-EMAIL_HOST_PASSWORD = 'nane lwur ikhj wtjl'
+EMAIL_HOST_USER = "apikey"
 
+EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_API_KEY")
+
+DEFAULT_FROM_EMAIL = "sunsparks1306@gmail.com"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

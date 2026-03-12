@@ -132,12 +132,6 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-import random
-from django.core.mail import send_mail
-from django.conf import settings
-from django.shortcuts import render, redirect
-from django.contrib import messages
-
 def register(request):
 
     if request.method == "POST":
