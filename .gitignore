@@ -16,3 +16,6 @@ staticfiles/
 
 # OS files
 .DS_Store
+
+# data
+data.json
